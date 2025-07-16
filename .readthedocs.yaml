@@ -19,7 +19,7 @@ build:
       # Если у вас есть группа зависимостей для документации (например, [tool.poetry.group.docs]), используйте --with docs
       # VIRTUAL_ENV нужно устанавливать вручную пока что
       # Смотрите https://github.com/readthedocs/readthedocs.org/pull/11152/
-      - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --with docs
+      - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --with dev
 
 mkdocs:
   configuration: mkdocs.yml
