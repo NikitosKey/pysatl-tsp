@@ -37,8 +37,19 @@ theme:
       toggle:
         icon: material/brightness-7
         name: Switch to light mode
-extra_css:
-  - css/extra.css
+
+markdown_extensions:
+  - pymdownx.highlight:
+  - pymdownx.superfences: 
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - attr_list
+  - md_in_html 
+  - def_list 
+  - footnotes
 
 plugins:
   - search
