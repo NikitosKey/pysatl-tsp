@@ -1,3 +1,7 @@
+"""
+This module provides various data providers for the pysatl_tsp package.
+"""
+
 from .abstract import DataProvider, T
 from .database_data_provider import DatabaseAdapter, DataBaseDataProvider
 from .file_data_provider import FileDataProvider

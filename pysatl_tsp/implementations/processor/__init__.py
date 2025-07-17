@@ -1,3 +1,7 @@
+"""
+Module for time series processing implementations.
+"""
+
 from .kalman_filter_handler import KalmanFilterHandler
 from .time_series_cross_validator import TimeSeriesCrossValidator
 
