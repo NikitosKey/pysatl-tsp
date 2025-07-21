@@ -20,27 +20,12 @@ release = '0.1.0'
 
 extensions = [
     "autodoc2",
+    'myst_parser',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
 ]
 
-myst_enable_extensions = [
-    "amsmath",
-    "attrs_inline",
-    "colon_fence",
-    "deflist",
-    "dollarmath",
-    "fieldlist",
-    "html_admonition",
-    "html_image",
-    "linkify",
-    "replacements",
-    "smartquotes",
-    "strikethrough",
-    "substitution",
-    "tasklist",
-]
 
 autodoc2_packages = [
     "../../pysatl_tsp",
@@ -55,7 +40,7 @@ autodoc2_set_typehints_format = "short"
 autodoc2_set_typehints_role = "obj"
 autodoc2_set_show_inheritance = True 
 autodoc2_set_hide_base_class_rtype = True
-autodoc2_set_private_member_filter = False 
+autodoc2_set_jrivate_member_filter = False 
 autodoc2_set_special_member_filter = ["__init__", "__call__"] 
 
 
