@@ -14,28 +14,28 @@ class Ohlc4Handler(MappingHandler[tuple[float | None, float | None, float | None
     :param source: The handler providing OHLC tuples, defaults to None
 
     Example:
-        ```python
-        # Create a data source with OHLC price tuples
-        ohlc_data = [
-            (100.0, 105.0, 98.0, 103.0),  # (open, high, low, close)
-            (103.0, 107.0, 101.0, 104.0),
-            (104.0, 109.0, 102.0, 108.0),
-        ]
-        data_source = SimpleDataProvider(ohlc_data)
+        .. code-block:: python
 
-        # Create an OHLC4 handler
-        ohlc4_handler = Ohlc4Handler(source=data_source)
-
-        # Process the data
-        for value in ohlc4_handler:
-            print(value)
-
-        # Output:
-        # 101.5  # (100.0 + 105.0 + 98.0 + 103.0) / 4
-        # 103.75 # (103.0 + 107.0 + 101.0 + 104.0) / 4
-        # 105.75 # (104.0 + 109.0 + 102.0 + 108.0) / 4
-        ```
-    """
+                    # Create a data source with OHLC price tuples
+                    ohlc_data = [
+                        (100.0, 105.0, 98.0, 103.0),  # (open, high, low, close)
+                        (103.0, 107.0, 101.0, 104.0),
+                        (104.0, 109.0, 102.0, 108.0),
+                    ]
+                    data_source = SimpleDataProvider(ohlc_data)
+            
+                    # Create an OHLC4 handler
+                    ohlc4_handler = Ohlc4Handler(source=data_source)
+            
+                    # Process the data
+                    for value in ohlc4_handler:
+                        print(value)
+            
+                    # Output:
+                    # 101.5  # (100.0 + 105.0 + 98.0 + 103.0) / 4
+                    # 103.75 # (103.0 + 107.0 + 101.0 + 104.0) / 4
+                    # 105.75 # (104.0 + 109.0 + 102.0 + 108.0) / 4
+"""
 
     @staticmethod
     def _map_func(t: tuple[float | None, float | None, float | None, float | None]) -> float | None:

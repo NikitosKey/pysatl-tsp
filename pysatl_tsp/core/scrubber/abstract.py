@@ -28,33 +28,33 @@ class ScrubberWindow(Generic[T]):
     :raises ValueError: If the lengths of values and indices don't match
 
     Example:
-        ```python
-        # Create an empty window
-        window = ScrubberWindow()
+        .. code-block:: python
 
-        # Add values with automatic indices
-        window.append(10.5)
-        window.append(11.2)
-        window.append(9.8)
-
-        # Add value with explicit index
-        window.append(12.1, index=100)
-
-        # Get value by position in window
-        first_value = window[0]  # 10.5
-
-        # Get a slice of the window
-        sub_window = window[1:3]  # Contains 11.2 and 9.8
-
-        # Iterate through values
-        for value in window:
-            print(value)
-
-        # Get original position of a value
-        third_value_index = window.indices[2]  # 2
-        fourth_value_index = window.indices[3]  # 100
-        ```
-    """
+                    # Create an empty window
+                    window = ScrubberWindow()
+            
+                    # Add values with automatic indices
+                    window.append(10.5)
+                    window.append(11.2)
+                    window.append(9.8)
+            
+                    # Add value with explicit index
+                    window.append(12.1, index=100)
+            
+                    # Get value by position in window
+                    first_value = window[0]  # 10.5
+            
+                    # Get a slice of the window
+                    sub_window = window[1:3]  # Contains 11.2 and 9.8
+            
+                    # Iterate through values
+                    for value in window:
+                        print(value)
+            
+                    # Get original position of a value
+                    third_value_index = window.indices[2]  # 2
+                    fourth_value_index = window.indices[3]  # 100
+"""
 
     def __init__(self, values: deque[T] | None = None, indices: deque[int] | None = None) -> None:
         """Initialize a scrubber window.
@@ -186,37 +186,37 @@ class Scrubber(Handler[T, ScrubberWindow[T]]):
     :param source: The handler providing input data, defaults to None
 
     Example:
-        ```python
-        # Example with a fixed-size sliding window scrubber (implementation not shown)
+        .. code-block:: python
 
-        # Create a data source
-        data_source = SimpleDataProvider([10, 20, 30, 40, 50, 60, 70, 80])
-
-        # Create a sliding window scrubber with window size 3
-        window_scrubber = SlidingWindowScrubber(window_size=3, source=data_source)
-
-        # Process windows
-        for window in window_scrubber:
-            # Each window is a ScrubberWindow instance
-            print(f"Window values: {list(window.values)}")
-            print(f"Window indices: {list(window.indices)}")
-
-            # Calculate window statistics
-            avg = sum(window.values) / len(window)
-            print(f"Window average: {avg}")
-
-        # Output:
-        # Window values: [10, 20, 30]
-        # Window indices: [0, 1, 2]
-        # Window average: 20.0
-        #
-        # Window values: [20, 30, 40]
-        # Window indices: [1, 2, 3]
-        # Window average: 30.0
-        #
-        # ... and so on
-        ```
-    """
+                    # Example with a fixed-size sliding window scrubber (implementation not shown)
+            
+                    # Create a data source
+                    data_source = SimpleDataProvider([10, 20, 30, 40, 50, 60, 70, 80])
+            
+                    # Create a sliding window scrubber with window size 3
+                    window_scrubber = SlidingWindowScrubber(window_size=3, source=data_source)
+            
+                    # Process windows
+                    for window in window_scrubber:
+                        # Each window is a ScrubberWindow instance
+                        print(f"Window values: {list(window.values)}")
+                        print(f"Window indices: {list(window.indices)}")
+            
+                        # Calculate window statistics
+                        avg = sum(window.values) / len(window)
+                        print(f"Window average: {avg}")
+            
+                    # Output:
+                    # Window values: [10, 20, 30]
+                    # Window indices: [0, 1, 2]
+                    # Window average: 20.0
+                    #
+                    # Window values: [20, 30, 40]
+                    # Window indices: [1, 2, 3]
+                    # Window average: 30.0
+                    #
+                    # ... and so on
+"""
 
     def __init__(self, source: Handler[Any, T] | None = None) -> None:
         """Initialize a scrubber.

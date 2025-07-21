@@ -19,28 +19,28 @@ class LagHandler(Handler[float | None, float | None]):
     :param lag: Number of time steps to look back for the lagged value
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0])
+        .. code-block:: python
 
-        # Create a lag handler with lag of 2
-        lag_handler = LagHandler(lag=2)
-        lag_handler.set_source(data_source)
-
-        # Process the data
-        results = list(lag_handler)
-        print(results)
-
-        # Output:
-        # [None, None, 5.0, 6.0, 7.0]
-        #
-        # Explanation:
-        # - First two values: None (not enough history)
-        # - Third value: 2*3.0-1.0 = 5.0 (current=3.0, lagged=1.0)
-        # - Fourth value: 2*4.0-2.0 = 6.0 (current=4.0, lagged=2.0)
-        # - Fifth value: 2*5.0-3.0 = 7.0 (current=5.0, lagged=3.0)
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0])
+            
+                    # Create a lag handler with lag of 2
+                    lag_handler = LagHandler(lag=2)
+                    lag_handler.set_source(data_source)
+            
+                    # Process the data
+                    results = list(lag_handler)
+                    print(results)
+            
+                    # Output:
+                    # [None, None, 5.0, 6.0, 7.0]
+                    #
+                    # Explanation:
+                    # - First two values: None (not enough history)
+                    # - Third value: 2*3.0-1.0 = 5.0 (current=3.0, lagged=1.0)
+                    # - Fourth value: 2*4.0-2.0 = 6.0 (current=4.0, lagged=2.0)
+                    # - Fifth value: 2*5.0-3.0 = 7.0 (current=5.0, lagged=3.0)
+"""
 
     def __init__(self, lag: int):
         """Initialize a lag handler.

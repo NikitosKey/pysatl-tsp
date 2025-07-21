@@ -17,29 +17,29 @@ class MidpointHandler(MovingWindowHandler[float | None, float | None]):
     :param source: Input data source, defaults to None
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 5.0, 4.0, 3.0, 2.0, 1.0])
+        .. code-block:: python
 
-        # Create a midpoint handler with length of 4
-        midpoint_handler = MidpointHandler(length=4)
-        midpoint_handler.set_source(data_source)
-
-        # Process the data
-        for value in midpoint_handler:
-            print(value)
-
-        # Output:
-        # None
-        # None
-        # None
-        # 3.0  (midpoint of [1.0, 2.0, 3.0, 5.0] = (1.0 + 5.0) / 2 = 3.0)
-        # 3.5  (midpoint of [2.0, 3.0, 5.0, 4.0] = (2.0 + 5.0) / 2 = 3.5)
-        # 4.0  (midpoint of [3.0, 5.0, 4.0, 3.0] = (3.0 + 5.0) / 2 = 4.0)
-        # 3.5  (midpoint of [5.0, 4.0, 3.0, 2.0] = (2.0 + 5.0) / 2 = 3.5)
-        # 3.0  (midpoint of [4.0, 3.0, 2.0, 1.0] = (1.0 + 4.0) / 2 = 2.5)
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 5.0, 4.0, 3.0, 2.0, 1.0])
+            
+                    # Create a midpoint handler with length of 4
+                    midpoint_handler = MidpointHandler(length=4)
+                    midpoint_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in midpoint_handler:
+                        print(value)
+            
+                    # Output:
+                    # None
+                    # None
+                    # None
+                    # 3.0  (midpoint of [1.0, 2.0, 3.0, 5.0] = (1.0 + 5.0) / 2 = 3.0)
+                    # 3.5  (midpoint of [2.0, 3.0, 5.0, 4.0] = (2.0 + 5.0) / 2 = 3.5)
+                    # 4.0  (midpoint of [3.0, 5.0, 4.0, 3.0] = (3.0 + 5.0) / 2 = 4.0)
+                    # 3.5  (midpoint of [5.0, 4.0, 3.0, 2.0] = (2.0 + 5.0) / 2 = 3.5)
+                    # 3.0  (midpoint of [4.0, 3.0, 2.0, 1.0] = (1.0 + 4.0) / 2 = 2.5)
+"""
 
     def _compute_result(self, state: dict[str, Any]) -> float | None:
         """Calculate midpoint as (highest + lowest) / 2.

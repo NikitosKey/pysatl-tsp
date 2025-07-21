@@ -20,22 +20,22 @@ class RMAHandler(InductiveHandler[float | None, float | None]):
     :param source: Source handler providing the input data, defaults to None
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        .. code-block:: python
 
-        # Create an RMA handler with length of 5
-        rma_handler = RMAHandler(length=5)
-        rma_handler.set_source(data_source)
-
-        # Process the data
-        for value in rma_handler:
-            print(value)
-
-        # First values will be None until we have 'length' values
-        # Then RMA values will be calculated with alpha = 1/5
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+            
+                    # Create an RMA handler with length of 5
+                    rma_handler = RMAHandler(length=5)
+                    rma_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in rma_handler:
+                        print(value)
+            
+                    # First values will be None until we have 'length' values
+                    # Then RMA values will be calculated with alpha = 1/5
+"""
 
     def __init__(self, length: int = 10, source: Handler[Any, float | None] | None = None):
         """Initialize a Wilder's Moving Average handler.

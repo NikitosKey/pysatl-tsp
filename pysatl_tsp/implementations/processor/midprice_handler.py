@@ -18,35 +18,35 @@ class MidpriceHandler(MovingWindowHandler[tuple[float | None, float | None], flo
     :param source: Input data source providing (high, low) tuples, defaults to None
 
     Example:
-        ```python
-        # Create a data source with (high, low) price tuples
-        data = [
-            (10.0, 8.0),  # (high, low)
-            (11.0, 9.0),
-            (12.0, 8.5),
-            (10.5, 7.5),
-            (11.5, 9.5),
-            (13.0, 10.0),
-        ]
-        data_source = SimpleDataProvider(data)
+        .. code-block:: python
 
-        # Create a midprice handler with length of 3
-        midprice_handler = MidpriceHandler(length=3)
-        midprice_handler.set_source(data_source)
-
-        # Process the data
-        for value in midprice_handler:
-            print(value)
-
-        # Output:
-        # None
-        # None
-        # 10.0  # (highest high 12.0 + lowest low 8.0) / 2 from first 3 tuples
-        # 10.0  # (highest high 12.0 + lowest low 7.5) / 2
-        # 10.0  # (highest high 12.0 + lowest low 7.5) / 2
-        # 10.25 # (highest high 13.0 + lowest low 7.5) / 2
-        ```
-    """
+                    # Create a data source with (high, low) price tuples
+                    data = [
+                        (10.0, 8.0),  # (high, low)
+                        (11.0, 9.0),
+                        (12.0, 8.5),
+                        (10.5, 7.5),
+                        (11.5, 9.5),
+                        (13.0, 10.0),
+                    ]
+                    data_source = SimpleDataProvider(data)
+            
+                    # Create a midprice handler with length of 3
+                    midprice_handler = MidpriceHandler(length=3)
+                    midprice_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in midprice_handler:
+                        print(value)
+            
+                    # Output:
+                    # None
+                    # None
+                    # 10.0  # (highest high 12.0 + lowest low 8.0) / 2 from first 3 tuples
+                    # 10.0  # (highest high 12.0 + lowest low 7.5) / 2
+                    # 10.0  # (highest high 12.0 + lowest low 7.5) / 2
+                    # 10.25 # (highest high 13.0 + lowest low 7.5) / 2
+"""
 
     def _compute_result(self, state: dict[str, Any]) -> float | None:
         """Calculate midprice as (highest high + lowest low) / 2.

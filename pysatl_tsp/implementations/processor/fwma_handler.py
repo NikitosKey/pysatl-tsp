@@ -15,24 +15,24 @@ class FWMAHandler(WeightedMovingAverageHandler):
     the weight calculation method.
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0])
+        .. code-block:: python
 
-        # Create a FWMA handler with length of 5
-        fwma_handler = FWMAHandler(length=5)
-        fwma_handler.set_source(data_source)
-
-        # Process the data
-        for value in fwma_handler:
-            print(value)
-
-        # First 4 values will be None (not enough data points)
-        # Subsequent values will be weighted averages using Fibonacci weights
-        # For length=5, weights would be [0.01, 0.01, 0.02, 0.03, 0.05] (normalized)
-        # or [0.05, 0.03, 0.02, 0.01, 0.01] when asc=False (default)
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0])
+            
+                    # Create a FWMA handler with length of 5
+                    fwma_handler = FWMAHandler(length=5)
+                    fwma_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in fwma_handler:
+                        print(value)
+            
+                    # First 4 values will be None (not enough data points)
+                    # Subsequent values will be weighted averages using Fibonacci weights
+                    # For length=5, weights would be [0.01, 0.01, 0.02, 0.03, 0.05] (normalized)
+                    # or [0.05, 0.03, 0.02, 0.01, 0.01] when asc=False (default)
+"""
 
     def _calculate_weights(self, length: int, asc: bool) -> list[float]:
         """Calculate Fibonacci weights for FWMA.

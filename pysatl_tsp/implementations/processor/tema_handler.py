@@ -22,23 +22,23 @@ class TEMAHandler(Handler[float | None, float | None]):
     :param length: Period for each EMA calculation
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        .. code-block:: python
 
-        # Create a TEMA handler with length of 5
-        tema_handler = TEMAHandler(length=5)
-        tema_handler.set_source(data_source)
-
-        # Process the data
-        for value in tema_handler:
-            print(value)
-
-        # Initial values will be None as TEMA requires three levels of EMA
-        # After initialization, TEMA values will follow the price action more closely
-        # than a regular EMA while maintaining smoothness
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+            
+                    # Create a TEMA handler with length of 5
+                    tema_handler = TEMAHandler(length=5)
+                    tema_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in tema_handler:
+                        print(value)
+            
+                    # Initial values will be None as TEMA requires three levels of EMA
+                    # After initialization, TEMA values will follow the price action more closely
+                    # than a regular EMA while maintaining smoothness
+"""
 
     def __init__(self, length: int):
         """Initialize a TEMA handler.

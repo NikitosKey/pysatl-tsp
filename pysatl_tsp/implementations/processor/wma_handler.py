@@ -21,24 +21,24 @@ class WMAHandler(WeightedMovingAverageHandler):
     :param source: Input data source, defaults to None
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0])
+        .. code-block:: python
 
-        # Create a WMA handler with length of 4
-        wma_handler = WMAHandler(length=4)
-        wma_handler.set_source(data_source)
-
-        # Process the data
-        for value in wma_handler:
-            print(value)
-
-        # First 3 values will be None (not enough data points)
-        # For length=4, weights would be [0.1, 0.2, 0.3, 0.4] (with asc=False)
-        # So the 4th value would be: (1.0*0.1 + 2.0*0.2 + 3.0*0.3 + 4.0*0.4) = 3.0
-        # Similarly, the 5th value: (2.0*0.1 + 3.0*0.2 + 4.0*0.3 + 5.0*0.4) = 4.0
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0])
+            
+                    # Create a WMA handler with length of 4
+                    wma_handler = WMAHandler(length=4)
+                    wma_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in wma_handler:
+                        print(value)
+            
+                    # First 3 values will be None (not enough data points)
+                    # For length=4, weights would be [0.1, 0.2, 0.3, 0.4] (with asc=False)
+                    # So the 4th value would be: (1.0*0.1 + 2.0*0.2 + 3.0*0.3 + 4.0*0.4) = 3.0
+                    # Similarly, the 5th value: (2.0*0.1 + 3.0*0.2 + 4.0*0.3 + 5.0*0.4) = 4.0
+"""
 
     def _calculate_weights(self, length: int, asc: bool) -> list[float]:
         """Calculate linear weights for WMA.

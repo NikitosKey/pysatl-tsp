@@ -19,23 +19,23 @@ class PWMAHandler(WeightedMovingAverageHandler):
     :param source: Input data source, defaults to None
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0])
+        .. code-block:: python
 
-        # Create a PWMA handler with length of 4
-        pwma_handler = PWMAHandler(length=4)
-        pwma_handler.set_source(data_source)
-
-        # Process the data
-        for value in pwma_handler:
-            print(value)
-
-        # First 3 values will be None (not enough data points)
-        # For length=4, Pascal weights would be [1/8, 3/8, 3/8, 1/8] or [1/8, 3/8, 3/8, 1/8] when asc=False
-        # The calculation gives more weight to the central values
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0])
+            
+                    # Create a PWMA handler with length of 4
+                    pwma_handler = PWMAHandler(length=4)
+                    pwma_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in pwma_handler:
+                        print(value)
+            
+                    # First 3 values will be None (not enough data points)
+                    # For length=4, Pascal weights would be [1/8, 3/8, 3/8, 1/8] or [1/8, 3/8, 3/8, 1/8] when asc=False
+                    # The calculation gives more weight to the central values
+"""
 
     def _calculate_weights(self, length: int, asc: bool) -> list[float]:
         """Calculate Pascal's triangle weights for PWMA.

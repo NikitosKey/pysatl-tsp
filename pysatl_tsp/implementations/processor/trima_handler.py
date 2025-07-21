@@ -20,25 +20,25 @@ class TRIMAHandler(Handler[float | None, float | None]):
     :param source: Input data source, defaults to None
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        .. code-block:: python
 
-        # Create a TRIMA handler with length of 5
-        trima_handler = TRIMAHandler(length=5)
-        trima_handler.set_source(data_source)
-
-        # Process the data
-        for value in trima_handler:
-            print(value)
-
-        # For a TRIMA with length=5, half_length=3:
-        # First SMA(3) requires 3 values
-        # Second SMA(3) of the first SMA values requires another 3 values
-        # So the first few values will be None, then TRIMA values follow
-        # The TRIMA gives more weight to the middle values in the calculation
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+            
+                    # Create a TRIMA handler with length of 5
+                    trima_handler = TRIMAHandler(length=5)
+                    trima_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in trima_handler:
+                        print(value)
+            
+                    # For a TRIMA with length=5, half_length=3:
+                    # First SMA(3) requires 3 values
+                    # Second SMA(3) of the first SMA values requires another 3 values
+                    # So the first few values will be None, then TRIMA values follow
+                    # The TRIMA gives more weight to the middle values in the calculation
+"""
 
     def __init__(self, length: int = 10, source: Handler[Any, float | None] | None = None):
         """Initialize TRIMA handler with specified parameters.

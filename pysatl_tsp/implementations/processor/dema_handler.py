@@ -21,22 +21,22 @@ class DEMAHandler(Handler[float | None, float | None]):
     :param source: Input data source, defaults to None
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        .. code-block:: python
 
-        # Create a DEMA handler with length of 3
-        dema_handler = DEMAHandler(length=3)
-        dema_handler.set_source(data_source)
-
-        # Process the data
-        for value in dema_handler:
-            print(value)
-
-        # The first few values will be None as the EMA needs to be established
-        # Then the DEMA values will be calculated using 2 * EMA - EMA of EMA
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+            
+                    # Create a DEMA handler with length of 3
+                    dema_handler = DEMAHandler(length=3)
+                    dema_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in dema_handler:
+                        print(value)
+            
+                    # The first few values will be None as the EMA needs to be established
+                    # Then the DEMA values will be calculated using 2 * EMA - EMA of EMA
+"""
 
     def __init__(self, length: int = 10, source: Handler[Any, float | None] | None = None):
         """Initialize a DEMA handler.

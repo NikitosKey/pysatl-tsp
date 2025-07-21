@@ -21,51 +21,51 @@ class OnlineFilterHandler(Handler[T, U]):
     :param source: The handler providing input data, defaults to None
 
     Example:
-        ```python
-        from pysatl_tsp.core.data_providers import SimpleDataProvider
-        from pysatl_tsp.core.scrubber import ScrubberWindow
-        from pysatl_tsp.core.processor import OnlineFilterHandler
-        import random
+        .. code-block:: python
 
-        random.seed(42)
-        data = [10 + i + random.uniform(-2, 2) for i in range(20)]
-        data_source = SimpleDataProvider(data)
-
-
-        # Define a simple moving average filter
-        def moving_avg(window: ScrubberWindow[float], config: int) -> float:
-            # Use only the last 'config' elements or all if less available
-            lookback = min(len(window), config)
-            if lookback == 0:
-                return 0
-            return sum(window[-lookback:].values) / lookback
-
-
-        # Create the online filter with a window size of 5
-        filter_handler = OnlineFilterHandler(filter_func=moving_avg, filter_config=5, source=data_source)
-
-        # Process the data
-        original_values = []
-        filtered_values = []
-
-        for i, filtered_value in enumerate(filter_handler):
-            original_values.append(data[i])
-            filtered_values.append(filtered_value)
-
-        print("Original vs Filtered:")
-        for orig, filt in zip(original_values[:10], filtered_values[:10]):
-            print(f"{orig:.2f} -> {filt:.2f}")
-
-        # Output might look like:
-        # Original vs Filtered:
-        # 9.67 -> 9.67
-        # 11.79 -> 10.73
-        # 11.56 -> 11.01
-        # 12.89 -> 11.48
-        # 13.89 -> 11.96
-        # ...
-        ```
-    """
+                    from pysatl_tsp.core.data_providers import SimpleDataProvider
+                    from pysatl_tsp.core.scrubber import ScrubberWindow
+                    from pysatl_tsp.core.processor import OnlineFilterHandler
+                    import random
+            
+                    random.seed(42)
+                    data = [10 + i + random.uniform(-2, 2) for i in range(20)]
+                    data_source = SimpleDataProvider(data)
+            
+            
+                    # Define a simple moving average filter
+                    def moving_avg(window: ScrubberWindow[float], config: int) -> float:
+                        # Use only the last 'config' elements or all if less available
+                        lookback = min(len(window), config)
+                        if lookback == 0:
+                            return 0
+                        return sum(window[-lookback:].values) / lookback
+            
+            
+                    # Create the online filter with a window size of 5
+                    filter_handler = OnlineFilterHandler(filter_func=moving_avg, filter_config=5, source=data_source)
+            
+                    # Process the data
+                    original_values = []
+                    filtered_values = []
+            
+                    for i, filtered_value in enumerate(filter_handler):
+                        original_values.append(data[i])
+                        filtered_values.append(filtered_value)
+            
+                    print("Original vs Filtered:")
+                    for orig, filt in zip(original_values[:10], filtered_values[:10]):
+                        print(f"{orig:.2f} -> {filt:.2f}")
+            
+                    # Output might look like:
+                    # Original vs Filtered:
+                    # 9.67 -> 9.67
+                    # 11.79 -> 10.73
+                    # 11.56 -> 11.01
+                    # 12.89 -> 11.48
+                    # 13.89 -> 11.96
+                    # ...
+"""
 
     def __init__(
         self,
@@ -115,48 +115,48 @@ class OfflineFilterHandler(Handler[T, U]):
     :param source: The handler providing input data, defaults to None
 
     Example:
-        ```python
-        # Create a data source
-        import numpy as np
-        from scipy import signal
+        .. code-block:: python
 
-        # Generate a noisy signal
-        t = np.linspace(0, 1, 100)
-        clean_signal = np.sin(2 * np.pi * 5 * t)
-        noise = np.random.normal(0, 0.2, 100)
-        noisy_signal = clean_signal + noise
-
-        data_source = SimpleDataProvider(noisy_signal)
-
-
-        # Define a Savitzky-Golay filter function
-        def savgol_filter(window: ScrubberWindow[float], config: dict) -> list[float]:
-            data = np.array(window.values)
-            window_length = config.get("window_length", 11)
-            polyorder = config.get("polyorder", 3)
-
-            filtered = signal.savgol_filter(data, window_length, polyorder)
-            return filtered.tolist()
-
-
-        # Create the offline filter
-        filter_handler = OfflineFilterHandler(
-            filter_func=savgol_filter, filter_config={"window_length": 11, "polyorder": 3}, source=data_source
-        )
-
-        # Process and visualize the results
-        filtered_signal = list(filter_handler)
-
-        import matplotlib.pyplot as plt
-
-        plt.figure(figsize=(10, 6))
-        plt.plot(t, noisy_signal, "b", label="Noisy signal")
-        plt.plot(t, filtered_signal, "r", label="Filtered signal")
-        plt.plot(t, clean_signal, "g", label="Original clean signal")
-        plt.legend()
-        plt.show()
-        ```
-    """
+                    # Create a data source
+                    import numpy as np
+                    from scipy import signal
+            
+                    # Generate a noisy signal
+                    t = np.linspace(0, 1, 100)
+                    clean_signal = np.sin(2 * np.pi * 5 * t)
+                    noise = np.random.normal(0, 0.2, 100)
+                    noisy_signal = clean_signal + noise
+            
+                    data_source = SimpleDataProvider(noisy_signal)
+            
+            
+                    # Define a Savitzky-Golay filter function
+                    def savgol_filter(window: ScrubberWindow[float], config: dict) -> list[float]:
+                        data = np.array(window.values)
+                        window_length = config.get("window_length", 11)
+                        polyorder = config.get("polyorder", 3)
+            
+                        filtered = signal.savgol_filter(data, window_length, polyorder)
+                        return filtered.tolist()
+            
+            
+                    # Create the offline filter
+                    filter_handler = OfflineFilterHandler(
+                        filter_func=savgol_filter, filter_config={"window_length": 11, "polyorder": 3}, source=data_source
+                    )
+            
+                    # Process and visualize the results
+                    filtered_signal = list(filter_handler)
+            
+                    import matplotlib.pyplot as plt
+            
+                    plt.figure(figsize=(10, 6))
+                    plt.plot(t, noisy_signal, "b", label="Noisy signal")
+                    plt.plot(t, filtered_signal, "r", label="Filtered signal")
+                    plt.plot(t, clean_signal, "g", label="Original clean signal")
+                    plt.legend()
+                    plt.show()
+"""
 
     def __init__(
         self,

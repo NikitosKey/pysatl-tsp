@@ -42,22 +42,22 @@ class InductiveHandler(Handler[T, U], ABC):
         :return: An object of arbitrary type representing the initial state
 
         Example:
-            ```python
-            # For a simple moving average:
-            def _initialize_state(self):
-                return {"values": [], "sum": 0.0}
+            .. code-block:: python
 
-
-            # For an EMA:
-            def _initialize_state(self):
-                return {"ema": None, "values": []}
-
-
-            # For standard deviation (Welford's algorithm):
-            def _initialize_state(self):
-                return {"count": 0, "mean": 0.0, "M2": 0.0}
-            ```
-        """
+                            # For a simple moving average:
+                            def _initialize_state(self):
+                                return {"values": [], "sum": 0.0}
+                
+                
+                            # For an EMA:
+                            def _initialize_state(self):
+                                return {"ema": None, "values": []}
+                
+                
+                            # For standard deviation (Welford's algorithm):
+                            def _initialize_state(self):
+                                return {"count": 0, "mean": 0.0, "M2": 0.0}
+"""
         pass
 
     @abstractmethod
@@ -73,28 +73,28 @@ class InductiveHandler(Handler[T, U], ABC):
         :return: The updated state of the same type as the state parameter
 
         Example:
-            ```python
-            # For a simple fixed-window moving average:
-            def _update_state(self, state, value):
-                state["values"].append(value)
-                state["sum"] += value
-                if len(state["values"]) > self.length:
-                    state["sum"] -= state["values"].pop(0)
-                return state
+            .. code-block:: python
 
-
-            # For an EMA:
-            def _update_state(self, state, value):
-                if state["ema"] is None:
-                    state["values"].append(value)
-                    if len(state["values"]) >= self.length:
-                        state["ema"] = sum(state["values"]) / len(state["values"])
-                        state["values"] = []
-                else:
-                    state["ema"] = self.alpha * value + (1 - self.alpha) * state["ema"]
-                return state
-            ```
-        """
+                            # For a simple fixed-window moving average:
+                            def _update_state(self, state, value):
+                                state["values"].append(value)
+                                state["sum"] += value
+                                if len(state["values"]) > self.length:
+                                    state["sum"] -= state["values"].pop(0)
+                                return state
+                
+                
+                            # For an EMA:
+                            def _update_state(self, state, value):
+                                if state["ema"] is None:
+                                    state["values"].append(value)
+                                    if len(state["values"]) >= self.length:
+                                        state["ema"] = sum(state["values"]) / len(state["values"])
+                                        state["values"] = []
+                                else:
+                                    state["ema"] = self.alpha * value + (1 - self.alpha) * state["ema"]
+                                return state
+"""
         pass
 
     @abstractmethod
@@ -108,21 +108,21 @@ class InductiveHandler(Handler[T, U], ABC):
         :return: The processing result corresponding to the current state
 
         Example:
-            ```python
-            # For a simple moving average:
-            def _compute_result(self, state):
-                if not state["values"]:
-                    return float("nan")
-                return state["sum"] / len(state["values"])
+            .. code-block:: python
 
-
-            # For standard deviation:
-            def _compute_result(self, state):
-                if state["count"] < 2:
-                    return 0.0
-                return math.sqrt(state["M2"] / state["count"])
-            ```
-        """
+                            # For a simple moving average:
+                            def _compute_result(self, state):
+                                if not state["values"]:
+                                    return float("nan")
+                                return state["sum"] / len(state["values"])
+                
+                
+                            # For standard deviation:
+                            def _compute_result(self, state):
+                                if state["count"] < 2:
+                                    return 0.0
+                                return math.sqrt(state["M2"] / state["count"])
+"""
         pass
 
     def __iter__(self) -> Iterator[U]:

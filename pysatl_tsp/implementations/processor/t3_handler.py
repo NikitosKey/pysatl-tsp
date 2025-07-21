@@ -24,22 +24,22 @@ class T3Handler(Handler[float | None, float | None]):
     :param source: Input data source, defaults to None
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        .. code-block:: python
 
-        # Create a T3 handler with length of 5 and volume factor of 0.7
-        t3_handler = T3Handler(length=5, a=0.7)
-        t3_handler.set_source(data_source)
-
-        # Process the data
-        for value in t3_handler:
-            print(value)
-
-        # Initial values will be None as the T3 calculation requires
-        # six sequential EMA calculations to establish
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+            
+                    # Create a T3 handler with length of 5 and volume factor of 0.7
+                    t3_handler = T3Handler(length=5, a=0.7)
+                    t3_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in t3_handler:
+                        print(value)
+            
+                    # Initial values will be None as the T3 calculation requires
+                    # six sequential EMA calculations to establish
+"""
 
     def __init__(self, length: int = 10, a: float = 0.7, source: Handler[Any, float | None] | None = None):
         """Initialize a T3 moving average handler.

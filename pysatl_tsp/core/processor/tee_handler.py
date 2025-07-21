@@ -20,35 +20,35 @@ class TeeHandler(Handler[T, U]):
     :param combine_func: Function that combines original and processed values
 
     Example:
-        ```python
-        # Create a data source
-        data_source = SimpleDataProvider([1, 2, 3, 4, 5])
+        .. code-block:: python
 
-        # Define a processor that squares the values
-        square_processor = MappingHandler(map_func=lambda x: x * x)
-
-
-        # Define a function to combine original and processed values
-        def combine(original, processed):
-            return f"{original} squared is {processed}"
-
-
-        # Create and use the tee handler
-        tee_handler = TeeHandler(processor=square_processor, combine_func=combine)
-        tee_handler.set_source(data_source)
-
-        # Process the data
-        for result in tee_handler:
-            print(result)
-
-        # Output:
-        # 1 squared is 1
-        # 2 squared is 4
-        # 3 squared is 9
-        # 4 squared is 16
-        # 5 squared is 25
-        ```
-    """
+                    # Create a data source
+                    data_source = SimpleDataProvider([1, 2, 3, 4, 5])
+            
+                    # Define a processor that squares the values
+                    square_processor = MappingHandler(map_func=lambda x: x * x)
+            
+            
+                    # Define a function to combine original and processed values
+                    def combine(original, processed):
+                        return f"{original} squared is {processed}"
+            
+            
+                    # Create and use the tee handler
+                    tee_handler = TeeHandler(processor=square_processor, combine_func=combine)
+                    tee_handler.set_source(data_source)
+            
+                    # Process the data
+                    for result in tee_handler:
+                        print(result)
+            
+                    # Output:
+                    # 1 squared is 1
+                    # 2 squared is 4
+                    # 3 squared is 9
+                    # 4 squared is 16
+                    # 5 squared is 25
+"""
 
     def __init__(self, processor: Handler[T, S], combine_func: Callable[[T, S], U]):
         """Initialize a tee handler.

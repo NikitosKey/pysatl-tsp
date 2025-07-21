@@ -19,41 +19,41 @@ class OnlineSamplingHandler(Handler[T, T]):
     :param source: The handler providing input data, defaults to None
 
     Example:
-        ```python
-        # Create a data source with steadily increasing values
-        data = list(range(100))
-        data_source = SimpleDataProvider(data)
+        .. code-block:: python
 
-
-        # Define a sampling rule that samples when the value changes by more than 5
-        def significant_change(window: ScrubberWindow[int]) -> bool:
-            if len(window) < 2:
-                return False
-
-            # Get last sample taken (first item in window) and current value
-            last_sampled = window[0]
-            current = window[-1]
-
-            # Sample if change is significant
-            return abs(current - last_sampled) >= 5
-
-
-        # Create a sampling handler
-        sampler = OnlineSamplingHandler(sampling_rule=significant_change, source=data_source)
-
-        # Process and collect sampled points
-        sampled_points = list(sampler)
-
-        print(f"Original data points: {len(data)}")
-        print(f"Sampled data points: {len(sampled_points)}")
-        print(f"Sampled values: {sampled_points[:10]}...")
-
-        # Output might look like:
-        # Original data points: 100
-        # Sampled data points: 20
-        # Sampled values: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45]...
-        ```
-    """
+                    # Create a data source with steadily increasing values
+                    data = list(range(100))
+                    data_source = SimpleDataProvider(data)
+            
+            
+                    # Define a sampling rule that samples when the value changes by more than 5
+                    def significant_change(window: ScrubberWindow[int]) -> bool:
+                        if len(window) < 2:
+                            return False
+            
+                        # Get last sample taken (first item in window) and current value
+                        last_sampled = window[0]
+                        current = window[-1]
+            
+                        # Sample if change is significant
+                        return abs(current - last_sampled) >= 5
+            
+            
+                    # Create a sampling handler
+                    sampler = OnlineSamplingHandler(sampling_rule=significant_change, source=data_source)
+            
+                    # Process and collect sampled points
+                    sampled_points = list(sampler)
+            
+                    print(f"Original data points: {len(data)}")
+                    print(f"Sampled data points: {len(sampled_points)}")
+                    print(f"Sampled values: {sampled_points[:10]}...")
+            
+                    # Output might look like:
+                    # Original data points: 100
+                    # Sampled data points: 20
+                    # Sampled values: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45]...
+"""
 
     def __init__(self, sampling_rule: Callable[[ScrubberWindow[T]], bool], source: Handler[Any, T] | None = None):
         """Initialize an online sampling handler.
@@ -93,67 +93,67 @@ class OfflineSamplingHandler(Handler[T, T]):
     :param source: The handler providing input data, defaults to None
 
     Example:
-        ```python
-        import numpy as np
-        import matplotlib.pyplot as plt
-        from typing import List
+        .. code-block:: python
 
-        # Create a data source with a sinusoidal signal
-        x = np.linspace(0, 4*np.pi, 1000)
-        y = np.sin(x)
-        data_source = SimpleDataProvider(y)
-
-        # Define an offline sampling rule that selects local extrema
-        def find_extrema(window: ScrubberWindow[float]) -> List[int]:
-            data = np.array(window.values)
-            # Find local maxima and minima
-            extrema_indices = []
-
-            # First point is always included
-            extrema_indices.append(0)
-
-            # Find local maxima and minima (simplified)
-            for i in range(1, len(data)-1):
-                if (data[i] > data[i-1] and data[i] > data[i+1]) or \
-                   (data[i] < data[i-1] and data[i] < data[i+1]):
-                    extrema_indices.append(i)
-
-            # Last point is always included
-            extrema_indices.append(len(data)-1)
-
-            return extrema_indices
-
-        # Create a sampling handler
-        sampler = OfflineSamplingHandler(
-            sampling_rule=find_extrema,
-            source=data_source
-        )
-
-        # Process and collect sampled points
-        sampled_indices = []
-        sampled_values = []
-        original_values = list(y)
-
-        for i, value in enumerate(sampler):
-            sampled_values.append(value)
-            # Approximate index (not exact)
-            sampled_indices.append(i * len(original_values) // len(sampled_values))
-
-        # Visualize the results
-        plt.figure(figsize=(12, 6))
-        plt.plot(x, y, 'b-', label='Original signal')
-        plt.plot(x[sampled_indices], sampled_values, 'ro', label='Sampled points')
-        plt.legend()
-        plt.title('Sinusoidal Signal with Extrema Sampling')
-        plt.xlabel('x')
-        plt.ylabel('sin(x)')
-        plt.grid(True)
-        plt.show()
-
-        print(f"Original data points: {len(original_values)}")
-        print(f"Sampled data points: {len(sampled_values)}")
-        ```
-    """
+                    import numpy as np
+                    import matplotlib.pyplot as plt
+                    from typing import List
+            
+                    # Create a data source with a sinusoidal signal
+                    x = np.linspace(0, 4*np.pi, 1000)
+                    y = np.sin(x)
+                    data_source = SimpleDataProvider(y)
+            
+                    # Define an offline sampling rule that selects local extrema
+                    def find_extrema(window: ScrubberWindow[float]) -> List[int]:
+                        data = np.array(window.values)
+                        # Find local maxima and minima
+                        extrema_indices = []
+            
+                        # First point is always included
+                        extrema_indices.append(0)
+            
+                        # Find local maxima and minima (simplified)
+                        for i in range(1, len(data)-1):
+                            if (data[i] > data[i-1] and data[i] > data[i+1]) or \
+                               (data[i] < data[i-1] and data[i] < data[i+1]):
+                                extrema_indices.append(i)
+            
+                        # Last point is always included
+                        extrema_indices.append(len(data)-1)
+            
+                        return extrema_indices
+            
+                    # Create a sampling handler
+                    sampler = OfflineSamplingHandler(
+                        sampling_rule=find_extrema,
+                        source=data_source
+                    )
+            
+                    # Process and collect sampled points
+                    sampled_indices = []
+                    sampled_values = []
+                    original_values = list(y)
+            
+                    for i, value in enumerate(sampler):
+                        sampled_values.append(value)
+                        # Approximate index (not exact)
+                        sampled_indices.append(i * len(original_values) // len(sampled_values))
+            
+                    # Visualize the results
+                    plt.figure(figsize=(12, 6))
+                    plt.plot(x, y, 'b-', label='Original signal')
+                    plt.plot(x[sampled_indices], sampled_values, 'ro', label='Sampled points')
+                    plt.legend()
+                    plt.title('Sinusoidal Signal with Extrema Sampling')
+                    plt.xlabel('x')
+                    plt.ylabel('sin(x)')
+                    plt.grid(True)
+                    plt.show()
+            
+                    print(f"Original data points: {len(original_values)}")
+                    print(f"Sampled data points: {len(sampled_values)}")
+"""
 
     def __init__(self, sampling_rule: Callable[[ScrubberWindow[T]], list[int]], source: Handler[Any, T] | None = None):
         """Initialize an offline sampling handler.

@@ -28,84 +28,84 @@ class TimeSeriesCrossValidator(Handler[T, tuple[ScrubberWindow[T], ScrubberWindo
     :param source: The handler providing input data, defaults to None
 
     Example:
-        ```python
-        import numpy as np
-        import matplotlib.pyplot as plt
+        .. code-block:: python
 
-        # Generate a synthetic time series
-        np.random.seed(42)
-        ts = np.cumsum(np.random.normal(0, 1, 100))  # Random walk
-        data_source = SimpleDataProvider(ts)
-
-        # Create a cross-validator with min_train_size=50 and val_size=10
-        cv = TimeSeriesCrossValidator(min_train_size=50, val_size=10, source=data_source)
-
-        # Visualize the different train-validation splits
-        plt.figure(figsize=(14, 8))
-        x = np.arange(len(ts))
-        plt.plot(x, ts, "k-", alpha=0.3, label="Full time series")
-
-        for i, (train, val) in enumerate(cv):
-            train_indices = list(train.indices)
-            val_indices = list(val.indices)
-
-            # Plot each split
-            plt.plot(train_indices, [ts[i] for i in train_indices], "b-", linewidth=2, alpha=0.7 - i * 0.1)
-            plt.plot(val_indices, [ts[i] for i in val_indices], "r-", linewidth=2, alpha=0.7 - i * 0.1)
-
-            # Add markers at the split point
-            split_idx = train_indices[-1]
-            plt.axvline(x=split_idx, color="g", linestyle="--", alpha=0.5)
-
-            # Print information about this split
-            print(f"Split {i + 1}:")
-            print(f"  Train: {len(train)} points (indices {train_indices[0]}..{train_indices[-1]})")
-            print(f"  Validation: {len(val)} points (indices {val_indices[0]}..{val_indices[-1]})")
-
-        plt.title("Time Series Cross-Validation: Expanding Window Approach")
-        plt.xlabel("Time")
-        plt.ylabel("Value")
-
-        # Add custom legend
-        from matplotlib.lines import Line2D
-
-        custom_lines = [
-            Line2D([0], [0], color="k", alpha=0.3),
-            Line2D([0], [0], color="b", linewidth=2),
-            Line2D([0], [0], color="r", linewidth=2),
-            Line2D([0], [0], color="g", linestyle="--"),
-        ]
-        plt.legend(
-            custom_lines, ["Full time series", "Training sets", "Validation sets", "Split points"], loc="upper left"
-        )
-
-        plt.grid(True, alpha=0.3)
-        plt.show()
-
-        # Example model evaluation with each split
-        from sklearn.linear_model import LinearRegression
-
-        for i, (train, val) in enumerate(cv):
-            # Prepare data
-            train_indices = list(train.indices)
-            train_X = np.array(train_indices).reshape(-1, 1)
-            train_y = np.array(list(train.values))
-
-            val_indices = list(val.indices)
-            val_X = np.array(val_indices).reshape(-1, 1)
-            val_y = np.array(list(val.values))
-
-            # Train a simple model
-            model = LinearRegression()
-            model.fit(train_X, train_y)
-
-            # Evaluate on validation set
-            val_pred = model.predict(val_X)
-            mse = np.mean((val_pred - val_y) ** 2)
-
-            print(f"Split {i + 1} - Validation MSE: {mse:.4f}")
-        ```
-    """
+                    import numpy as np
+                    import matplotlib.pyplot as plt
+            
+                    # Generate a synthetic time series
+                    np.random.seed(42)
+                    ts = np.cumsum(np.random.normal(0, 1, 100))  # Random walk
+                    data_source = SimpleDataProvider(ts)
+            
+                    # Create a cross-validator with min_train_size=50 and val_size=10
+                    cv = TimeSeriesCrossValidator(min_train_size=50, val_size=10, source=data_source)
+            
+                    # Visualize the different train-validation splits
+                    plt.figure(figsize=(14, 8))
+                    x = np.arange(len(ts))
+                    plt.plot(x, ts, "k-", alpha=0.3, label="Full time series")
+            
+                    for i, (train, val) in enumerate(cv):
+                        train_indices = list(train.indices)
+                        val_indices = list(val.indices)
+            
+                        # Plot each split
+                        plt.plot(train_indices, [ts[i] for i in train_indices], "b-", linewidth=2, alpha=0.7 - i * 0.1)
+                        plt.plot(val_indices, [ts[i] for i in val_indices], "r-", linewidth=2, alpha=0.7 - i * 0.1)
+            
+                        # Add markers at the split point
+                        split_idx = train_indices[-1]
+                        plt.axvline(x=split_idx, color="g", linestyle="--", alpha=0.5)
+            
+                        # Print information about this split
+                        print(f"Split {i + 1}:")
+                        print(f"  Train: {len(train)} points (indices {train_indices[0]}..{train_indices[-1]})")
+                        print(f"  Validation: {len(val)} points (indices {val_indices[0]}..{val_indices[-1]})")
+            
+                    plt.title("Time Series Cross-Validation: Expanding Window Approach")
+                    plt.xlabel("Time")
+                    plt.ylabel("Value")
+            
+                    # Add custom legend
+                    from matplotlib.lines import Line2D
+            
+                    custom_lines = [
+                        Line2D([0], [0], color="k", alpha=0.3),
+                        Line2D([0], [0], color="b", linewidth=2),
+                        Line2D([0], [0], color="r", linewidth=2),
+                        Line2D([0], [0], color="g", linestyle="--"),
+                    ]
+                    plt.legend(
+                        custom_lines, ["Full time series", "Training sets", "Validation sets", "Split points"], loc="upper left"
+                    )
+            
+                    plt.grid(True, alpha=0.3)
+                    plt.show()
+            
+                    # Example model evaluation with each split
+                    from sklearn.linear_model import LinearRegression
+            
+                    for i, (train, val) in enumerate(cv):
+                        # Prepare data
+                        train_indices = list(train.indices)
+                        train_X = np.array(train_indices).reshape(-1, 1)
+                        train_y = np.array(list(train.values))
+            
+                        val_indices = list(val.indices)
+                        val_X = np.array(val_indices).reshape(-1, 1)
+                        val_y = np.array(list(val.values))
+            
+                        # Train a simple model
+                        model = LinearRegression()
+                        model.fit(train_X, train_y)
+            
+                        # Evaluate on validation set
+                        val_pred = model.predict(val_X)
+                        mse = np.mean((val_pred - val_y) ** 2)
+            
+                        print(f"Split {i + 1} - Validation MSE: {mse:.4f}")
+"""
 
     def __init__(self, min_train_size: int, val_size: int, source: Optional[Handler[Any, T]] = None):
         """Initialize a time series cross-validator.

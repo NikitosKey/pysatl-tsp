@@ -24,24 +24,24 @@ class WebSocketDataProvider(DataProvider[str]):
     :param subscribe_message: Optional message to send after connection to subscribe to specific data streams
 
     Example:
-        ```python
-        # Example: Connecting to Bybit WebSocket API for Bitcoin price data
+        .. code-block:: python
 
-        bybit_provider = WebSocketDataProvider(
-            uri="wss://stream.bybit.com/v5/public/spot",
-            subscribe_message={"op": "subscribe", "args": ["tickers.BTCUSDT"]},
-        )
-
-        try:
-            for message in bybit_provider:
-                data = json.loads(message)
-                if "data" in data and data.get("topic") == "tickers.BTCUSDT":
-                    price_data = data["data"]
-                    print(f"BTC/USDT: {price_data['lastPrice']} (Time: {price_data['timestamp']})")
-        except KeyboardInterrupt:
-            bybit_provider.close()
-        ```
-    """
+                    # Example: Connecting to Bybit WebSocket API for Bitcoin price data
+            
+                    bybit_provider = WebSocketDataProvider(
+                        uri="wss://stream.bybit.com/v5/public/spot",
+                        subscribe_message={"op": "subscribe", "args": ["tickers.BTCUSDT"]},
+                    )
+            
+                    try:
+                        for message in bybit_provider:
+                            data = json.loads(message)
+                            if "data" in data and data.get("topic") == "tickers.BTCUSDT":
+                                price_data = data["data"]
+                                print(f"BTC/USDT: {price_data['lastPrice']} (Time: {price_data['timestamp']})")
+                    except KeyboardInterrupt:
+                        bybit_provider.close()
+"""
 
     def __init__(self, uri: str, subscribe_message: dict[str, Any] | None = None) -> None:
         """Initialize a WebSocket data provider.

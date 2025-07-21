@@ -18,23 +18,23 @@ class EMAHandler(InductiveHandler[float | None, float | None]):
     :param source: Input data source, defaults to None
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        .. code-block:: python
 
-        # Create an EMA handler with length of 5
-        ema_handler = EMAHandler(length=5)
-        ema_handler.set_source(data_source)
-
-        # Process the data
-        for value in ema_handler:
-            print(value)
-
-        # The first 4 values will be None since we're using SMA initialization
-        # The 5th value will be the SMA of the first 5 values
-        # Subsequent values will be EMA values based on the formula
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+            
+                    # Create an EMA handler with length of 5
+                    ema_handler = EMAHandler(length=5)
+                    ema_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in ema_handler:
+                        print(value)
+            
+                    # The first 4 values will be None since we're using SMA initialization
+                    # The 5th value will be the SMA of the first 5 values
+                    # Subsequent values will be EMA values based on the formula
+"""
 
     def __init__(
         self,

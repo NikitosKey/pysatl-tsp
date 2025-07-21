@@ -21,36 +21,36 @@ class OfflineSegmentationScrubber(Scrubber[T]):
     :param source: The handler providing input data, defaults to None
 
     Example:
-        ```python
-        # Create a data source with synthetic pattern
-        data = [1, 1, 2, 2, 5, 5, 5, 1, 1, 1, 6, 6, 6, 6]
-        data_source = SimpleDataProvider(data)
+        .. code-block:: python
 
-
-        # Define a simple variance-based segmentation rule
-        def find_changepoints(window: ScrubberWindow[int]) -> list[int]:
-            changepoints = []
-            # Simple detection of value changes
-            for i in range(1, len(window)):
-                if abs(window[i] - window[i - 1]) > 2:  # Threshold for change
-                    changepoints.append(i)
-            return changepoints
-
-
-        # Create the segmentation scrubber
-        segmenter = OfflineSegmentationScrubber(segmentation_rule=find_changepoints, source=data_source)
-
-        # Process the segments
-        for segment in segmenter:
-            print(f"Segment values: {list(segment.values)}")
-
-        # Output:
-        # Segment values: [1, 1, 2, 2]
-        # Segment values: [5, 5, 5]
-        # Segment values: [1, 1, 1]
-        # Segment values: [6, 6, 6, 6]
-        ```
-    """
+                    # Create a data source with synthetic pattern
+                    data = [1, 1, 2, 2, 5, 5, 5, 1, 1, 1, 6, 6, 6, 6]
+                    data_source = SimpleDataProvider(data)
+            
+            
+                    # Define a simple variance-based segmentation rule
+                    def find_changepoints(window: ScrubberWindow[int]) -> list[int]:
+                        changepoints = []
+                        # Simple detection of value changes
+                        for i in range(1, len(window)):
+                            if abs(window[i] - window[i - 1]) > 2:  # Threshold for change
+                                changepoints.append(i)
+                        return changepoints
+            
+            
+                    # Create the segmentation scrubber
+                    segmenter = OfflineSegmentationScrubber(segmentation_rule=find_changepoints, source=data_source)
+            
+                    # Process the segments
+                    for segment in segmenter:
+                        print(f"Segment values: {list(segment.values)}")
+            
+                    # Output:
+                    # Segment values: [1, 1, 2, 2]
+                    # Segment values: [5, 5, 5]
+                    # Segment values: [1, 1, 1]
+                    # Segment values: [6, 6, 6, 6]
+"""
 
     def __init__(
         self, segmentation_rule: Callable[[ScrubberWindow[T]], list[int]], source: Handler[Any, T] | None = None
@@ -97,41 +97,41 @@ class OnlineSegmentationScrubber(Scrubber[T]):
     :param source: The handler providing input data, defaults to None
 
     Example:
-        ```python
-        # Create a data source with streaming values
-        data = [1, 1, 2, 3, 8, 9, 8, 2, 2, 3, 10, 10, 9, 9]
-        data_source = SimpleDataProvider(data)
+        .. code-block:: python
 
-
-        # Define a threshold-based segmentation rule
-        def detect_jump(window: ScrubberWindow[int]) -> bool:
-            if len(window) < 2:
-                return False
-
-            # Detect a large jump in values
-            last_value = window[-1]
-            prev_value = window[-2]
-            return abs(last_value - prev_value) > 3
-
-
-        # Create the online segmentation scrubber
-        segmenter = OnlineSegmentationScrubber(
-            segmentation_rule=detect_jump,
-            max_segment_size=5,  # Force segmentation after 5 points if no jump detected
-            source=data_source,
-        )
-
-        # Process the segments as they're detected
-        for segment in segmenter:
-            print(f"Segment values: {list(segment.values)}")
-
-        # Output:
-        # Segment values: [1, 1, 2, 3, 8]  # Split due to jump from 3 to 8 and max size
-        # Segment values: [9, 8, 2]        # Split due to jump from 8 to 2
-        # Segment values: [2, 3, 10]       # Split due to jump from 3 to 10
-        # Segment values: [10, 9, 9]       # Remaining data
-        ```
-    """
+                    # Create a data source with streaming values
+                    data = [1, 1, 2, 3, 8, 9, 8, 2, 2, 3, 10, 10, 9, 9]
+                    data_source = SimpleDataProvider(data)
+            
+            
+                    # Define a threshold-based segmentation rule
+                    def detect_jump(window: ScrubberWindow[int]) -> bool:
+                        if len(window) < 2:
+                            return False
+            
+                        # Detect a large jump in values
+                        last_value = window[-1]
+                        prev_value = window[-2]
+                        return abs(last_value - prev_value) > 3
+            
+            
+                    # Create the online segmentation scrubber
+                    segmenter = OnlineSegmentationScrubber(
+                        segmentation_rule=detect_jump,
+                        max_segment_size=5,  # Force segmentation after 5 points if no jump detected
+                        source=data_source,
+                    )
+            
+                    # Process the segments as they're detected
+                    for segment in segmenter:
+                        print(f"Segment values: {list(segment.values)}")
+            
+                    # Output:
+                    # Segment values: [1, 1, 2, 3, 8]  # Split due to jump from 3 to 8 and max size
+                    # Segment values: [9, 8, 2]        # Split due to jump from 8 to 2
+                    # Segment values: [2, 3, 10]       # Split due to jump from 3 to 10
+                    # Segment values: [10, 9, 9]       # Remaining data
+"""
 
     def __init__(
         self,

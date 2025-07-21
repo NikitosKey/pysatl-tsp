@@ -19,42 +19,42 @@ class CombineHandler(Handler[T, U]):
     :param continue_on_partial: Whether to continue when some handlers are exhausted, defaults to True
 
     Example:
-        ```python
-        # Create a data source
-        data_source = SimpleDataProvider([1, 2, 3, 4, 5])
+        .. code-block:: python
 
-        # Define handlers for different transformations
-        square_handler = MappingHandler(map_func=lambda x: x * x)
-        double_handler = MappingHandler(map_func=lambda x: 2 * x)
-        str_handler = MappingHandler(map_func=lambda x: f"Value: {x}")
-
-        # Function to combine outputs from all handlers
-        def combine_results(values):
-            return {
-                "original^2": values[0],
-                "original*2": values[1],
-                "string": values[2]
-            }
-
-        # Create and use the combine handler
-        combine = CombineHandler(
-            combine_func=combine_results,
-            square_handler, double_handler, str_handler
-        )
-        combine.set_source(data_source)
-
-        # Process the data
-        for result in combine:
-            print(result)
-
-        # Output:
-        # {'original^2': 1, 'original*2': 2, 'string': 'Value: 1'}
-        # {'original^2': 4, 'original*2': 4, 'string': 'Value: 2'}
-        # {'original^2': 9, 'original*2': 6, 'string': 'Value: 3'}
-        # {'original^2': 16, 'original*2': 8, 'string': 'Value: 4'}
-        # {'original^2': 25, 'original*2': 10, 'string': 'Value: 5'}
-        ```
-    """
+                    # Create a data source
+                    data_source = SimpleDataProvider([1, 2, 3, 4, 5])
+            
+                    # Define handlers for different transformations
+                    square_handler = MappingHandler(map_func=lambda x: x * x)
+                    double_handler = MappingHandler(map_func=lambda x: 2 * x)
+                    str_handler = MappingHandler(map_func=lambda x: f"Value: {x}")
+            
+                    # Function to combine outputs from all handlers
+                    def combine_results(values):
+                        return {
+                            "original^2": values[0],
+                            "original*2": values[1],
+                            "string": values[2]
+                        }
+            
+                    # Create and use the combine handler
+                    combine = CombineHandler(
+                        combine_func=combine_results,
+                        square_handler, double_handler, str_handler
+                    )
+                    combine.set_source(data_source)
+            
+                    # Process the data
+                    for result in combine:
+                        print(result)
+            
+                    # Output:
+                    # {'original^2': 1, 'original*2': 2, 'string': 'Value: 1'}
+                    # {'original^2': 4, 'original*2': 4, 'string': 'Value: 2'}
+                    # {'original^2': 9, 'original*2': 6, 'string': 'Value: 3'}
+                    # {'original^2': 16, 'original*2': 8, 'string': 'Value: 4'}
+                    # {'original^2': 25, 'original*2': 10, 'string': 'Value: 5'}
+"""
 
     def __init__(
         self, combine_func: Callable[[list[Any]], U], *handlers: Handler[T, Any], continue_on_partial: bool = True

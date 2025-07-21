@@ -20,44 +20,44 @@ class DatabaseAdapter(ABC, Generic[T]):
     consistent format for the data processing pipeline.
 
     Example:
-        ```python
-        import sqlite3
+        .. code-block:: python
 
-
-        class SQLiteAdapter(DatabaseAdapter[dict[str, Any]]):
-            def connect(self, connection_params: dict[str, Any]) -> sqlite3.Connection:
-                connection = sqlite3.connect(connection_params["database"])
-                connection.row_factory = sqlite3.Row
-                return connection
-
-            def execute_query(
-                self, connection: sqlite3.Connection, query: str, params: tuple[Any, ...] = ()
-            ) -> sqlite3.Cursor:
-                cursor = connection.cursor()
-                cursor.execute(query, params)
-                return cursor
-
-            def fetch_data(self, cursor: sqlite3.Cursor) -> Iterator[dict[str, Any]]:
-                for row in cursor:
-                    yield dict(row)
-
-            def close_cursor(self, cursor: sqlite3.Cursor) -> None:
-                cursor.close()
-
-            def close_connection(self, connection: sqlite3.Connection) -> None:
-                connection.close()
-
-
-        # Usage:
-        adapter = SQLiteAdapter()
-        provider = DataBaseDataProvider(
-            connection_params={"database": "time_series.db"},
-            query="SELECT timestamp, value FROM measurements WHERE sensor_id = ?",
-            adapter=adapter,
-            params=(42,),
-        )
-        ```
-    """
+                    import sqlite3
+            
+            
+                    class SQLiteAdapter(DatabaseAdapter[dict[str, Any]]):
+                        def connect(self, connection_params: dict[str, Any]) -> sqlite3.Connection:
+                            connection = sqlite3.connect(connection_params["database"])
+                            connection.row_factory = sqlite3.Row
+                            return connection
+            
+                        def execute_query(
+                            self, connection: sqlite3.Connection, query: str, params: tuple[Any, ...] = ()
+                        ) -> sqlite3.Cursor:
+                            cursor = connection.cursor()
+                            cursor.execute(query, params)
+                            return cursor
+            
+                        def fetch_data(self, cursor: sqlite3.Cursor) -> Iterator[dict[str, Any]]:
+                            for row in cursor:
+                                yield dict(row)
+            
+                        def close_cursor(self, cursor: sqlite3.Cursor) -> None:
+                            cursor.close()
+            
+                        def close_connection(self, connection: sqlite3.Connection) -> None:
+                            connection.close()
+            
+            
+                    # Usage:
+                    adapter = SQLiteAdapter()
+                    provider = DataBaseDataProvider(
+                        connection_params={"database": "time_series.db"},
+                        query="SELECT timestamp, value FROM measurements WHERE sensor_id = ?",
+                        adapter=adapter,
+                        params=(42,),
+                    )
+"""
 
     @abstractmethod
     def connect(self, connection_params: dict[str, Any]) -> Any:
@@ -121,29 +121,29 @@ class DataBaseDataProvider(DataProvider[T], Generic[T]):
     :param params: Query parameters, defaults to ()
 
     Example:
-        ```python
-        # Using the SQLiteAdapter from the example above
-        import sqlite3
+        .. code-block:: python
 
-        class SQLiteAdapter(DatabaseAdapter[dict[str, Any]]):
-            # ... adapter implementation as shown above ...
-
-        # Create a data provider for SQLite database
-        provider = DataBaseDataProvider(
-            connection_params={"database": "sensors.db"},
-            query="SELECT timestamp, value FROM temperature WHERE location_id = ? AND timestamp > ?",
-            adapter=SQLiteAdapter(),
-            params=("zone-1", "2023-01-01")
-        )
-
-        # Use the provider in a processing pipeline
-        for record in provider:
-            print(f"Time: {record['timestamp']}, Value: {record['value']}")
-
-        # Or connect to a processing pipeline
-        pipeline = provider | WindowHandler(60) | AverageHandler()
-        ```
-    """
+                    # Using the SQLiteAdapter from the example above
+                    import sqlite3
+            
+                    class SQLiteAdapter(DatabaseAdapter[dict[str, Any]]):
+                        # ... adapter implementation as shown above ...
+            
+                    # Create a data provider for SQLite database
+                    provider = DataBaseDataProvider(
+                        connection_params={"database": "sensors.db"},
+                        query="SELECT timestamp, value FROM temperature WHERE location_id = ? AND timestamp > ?",
+                        adapter=SQLiteAdapter(),
+                        params=("zone-1", "2023-01-01")
+                    )
+            
+                    # Use the provider in a processing pipeline
+                    for record in provider:
+                        print(f"Time: {record['timestamp']}, Value: {record['value']}")
+            
+                    # Or connect to a processing pipeline
+                    pipeline = provider | WindowHandler(60) | AverageHandler()
+"""
 
     def __init__(
         self,

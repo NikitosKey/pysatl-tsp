@@ -22,23 +22,23 @@ class HMAHandler(Handler[float | None, float | None]):
     :param length: The period for HMA calculation
 
     Example:
-        ```python
-        # Create a data source with numeric values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        .. code-block:: python
 
-        # Create a Hull Moving Average handler with length of 4
-        hma_handler = HMAHandler(length=4)
-        hma_handler.set_source(data_source)
-
-        # Process the data
-        for value in hma_handler:
-            print(value)
-
-        # The first few values may be None as the HMA needs historical data
-        # Then the HMA values will follow, being more responsive than traditional
-        # moving averages while maintaining smoothness.
-        ```
-    """
+                    # Create a data source with numeric values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+            
+                    # Create a Hull Moving Average handler with length of 4
+                    hma_handler = HMAHandler(length=4)
+                    hma_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in hma_handler:
+                        print(value)
+            
+                    # The first few values may be None as the HMA needs historical data
+                    # Then the HMA values will follow, being more responsive than traditional
+                    # moving averages while maintaining smoothness.
+"""
 
     def __init__(self, length: int):
         """Initialize a Hull Moving Average handler.

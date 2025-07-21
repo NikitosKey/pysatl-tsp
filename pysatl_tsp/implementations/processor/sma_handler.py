@@ -21,29 +21,29 @@ class SMAHandler(MovingWindowHandler[float | None, float | None]):
     :param source: Input data source, defaults to None
 
     Example:
-        ```python
-        # Create a data source with numeric values and some None values
-        data_source = SimpleDataProvider([1.0, 2.0, 3.0, None, 5.0, 6.0, 7.0, 8.0])
+        .. code-block:: python
 
-        # Create an SMA handler with length of 4 and minimum periods of 3
-        sma_handler = SMAHandler(length=4, min_periods=3)
-        sma_handler.set_source(data_source)
-
-        # Process the data
-        for value in sma_handler:
-            print(value)
-
-        # Output:
-        # None
-        # None
-        # 2.0   # (1.0 + 2.0 + 3.0) / 3 (only 3 values, but min_periods=3)
-        # 3.33  # (1.0 + 2.0 + 3.0 + 5.0) / 3 (ignoring None)
-        # 3.33  # (2.0 + 3.0 + 5.0) / 3 (window moves, still ignoring None)
-        # 4.67  # (3.0 + 5.0 + 6.0) / 3
-        # 6.0   # (5.0 + 6.0 + 7.0) / 3
-        # 6.5   # (5.0 + 6.0 + 7.0 + 8.0) / 4 (full window with all valid values)
-        ```
-    """
+                    # Create a data source with numeric values and some None values
+                    data_source = SimpleDataProvider([1.0, 2.0, 3.0, None, 5.0, 6.0, 7.0, 8.0])
+            
+                    # Create an SMA handler with length of 4 and minimum periods of 3
+                    sma_handler = SMAHandler(length=4, min_periods=3)
+                    sma_handler.set_source(data_source)
+            
+                    # Process the data
+                    for value in sma_handler:
+                        print(value)
+            
+                    # Output:
+                    # None
+                    # None
+                    # 2.0   # (1.0 + 2.0 + 3.0) / 3 (only 3 values, but min_periods=3)
+                    # 3.33  # (1.0 + 2.0 + 3.0 + 5.0) / 3 (ignoring None)
+                    # 3.33  # (2.0 + 3.0 + 5.0) / 3 (window moves, still ignoring None)
+                    # 4.67  # (3.0 + 5.0 + 6.0) / 3
+                    # 6.0   # (5.0 + 6.0 + 7.0) / 3
+                    # 6.5   # (5.0 + 6.0 + 7.0 + 8.0) / 4 (full window with all valid values)
+"""
 
     def __init__(
         self, length: int = 10, min_periods: int | None = None, source: Handler[Any, float | None] | None = None
