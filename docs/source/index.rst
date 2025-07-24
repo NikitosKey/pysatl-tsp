@@ -1,4 +1,3 @@
-# docs/source/index.rst
 
 PySATL-TSP
 ==========
@@ -13,13 +12,12 @@ PySATL-TSP
 
 PySATL **Time Series Processing** subproject (*abbreviated pysatl-tsp*) is a module designed for adaptive processing of time series data with a focus on streaming architecture. It implements a `chain of responsibility pattern <https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern>`_ that enables building complex data processing pipelines with minimal boilerplate code, making it suitable for real-time applications and large dataset analysis.
 
----
 
 .. toctree::
-   :maxdepth: 6
+   :hidden:
    :caption: Contents
 
-   api_reference
+   apidocs/index
    contributing
    license
 
